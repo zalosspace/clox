@@ -8,6 +8,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(clox
     src/main.c
+    src/Frontend/compiler.c
+    src/Frontend/lexer.c
     src/Chunk/chunk.c
     src/Debug/debug.c
     src/Core/memory.c
