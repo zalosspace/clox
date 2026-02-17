@@ -12,6 +12,7 @@ add_executable(clox
     src/Debug/debug.c
     src/Core/memory.c
     src/Core/value.c
+    src/VM/vm.c
 )
 
 target_include_directories(clox PRIVATE src)
