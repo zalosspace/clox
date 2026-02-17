@@ -1,19 +1,25 @@
 #pragma once
 
-#include "../common.h"
+#include "Core/value.h"
+#include "common.h"
 
 typedef enum {
+    OP_CONSTANT,
     OP_RETURN,
 } OpCode;
 
 typedef struct {
-    // number of element in use in array we have allocated
+    // Number of element in use in array we have allocated
     int count;
-    // number of element in array we have allocated
+    // Number of element in array we have allocated
     int capacity; 
-    uint8_t* code; // hence, a bytecode
+    uint8_t* code; // Hence, a bytecode
+    int* lines;
+    ValueArray constants; // Constant pool
 } Chunk;
 
 void initChunk(Chunk *chunk);
 void freeChunk(Chunk *chunk);
-void writeChunk(Chunk *chunk, uint8_t byte);
+// Writes opcodes or operands
+void writeChunk(Chunk *chunk, uint8_t byte, int line);
+int addConstant(Chunk *chunk, Value value);
