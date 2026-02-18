@@ -99,12 +99,11 @@ InterpretResult interpret(const char *source) {
         return INTERPRET_COMPILE_ERROR;
     }
 
-    // vm.chunk = &chunk;
-    // vm.ip = vm.chunk->code;
+    vm.chunk = &chunk;
+    vm.ip = vm.chunk->code;
 
-    // InterpretResult result = run();
+    InterpretResult result = run();
 
     freeChunk(&chunk);
-    // return result;
-    return INTERPRET_OK;
+    return result;
 }
