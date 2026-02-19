@@ -1,5 +1,6 @@
 #include "compiler.h"
 #include "Chunk/chunk.h"
+#include "Core/value.h"
 #include "VM/vm.h"
 #include "lexer.h"
 #include "Frontend/lexer.h"
@@ -163,7 +164,7 @@ static void grouping() {
 
 static void number() {
     double value = strtod(parser.previous.start, NULL);
-    emitConstant(value);
+    emitConstant(NUMBER_VAL(value));
 }
 
 static void unary() {
@@ -224,8 +225,8 @@ ParseRule rules[] = {
 
 static void parsePrecedence(Precedence precedence) {
     advance();
+
     ParseFn prefixRule = getRule(parser.previous.type)->prefix;
-    
     if (prefixRule == NULL) {
         error("Expect expression.");
 
