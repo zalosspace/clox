@@ -47,7 +47,7 @@ static char* readFile(const char *path) {
     return buffer;
 }
 
-static void runFile(const char *path) {
+static void executeFile(const char *path) {
     char *source = readFile(path);
 
     InterpretResult result = interpret(source);
@@ -66,7 +66,7 @@ int main(int argc, const char* argv[]) {
         repl();
     }
     else if (argc == 2) {
-        runFile(argv[1]);
+        executeFile(argv[1]);
     }
     else {
         fprintf(stderr, "Usage: clox [path]\n");

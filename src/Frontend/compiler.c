@@ -105,7 +105,6 @@ static void emitBytes(uint8_t byte1, uint8_t byte2) {
     emitByte(byte2);
 }
 
-
 static void emitReturn() {
     emitByte(OP_RETURN);
 }
@@ -182,6 +181,12 @@ static void number() {
     emitConstant(NUMBER_VAL(value));
 }
 
+static void string() {
+    emitConstant(OBJ_VAL(
+        copyString(parser.previous.start + 1,
+                   parser.previous.length - 2)));
+}
+
 static void unary() {
     TokenType operatorType = parser.previous.type;
 
@@ -217,7 +222,7 @@ ParseRule rules[] = {
   [TOKEN_LESS]          = {NULL,     binary, PREC_COMPARISON},
   [TOKEN_LESS_EQUAL]    = {NULL,     binary, PREC_COMPARISON},
   [TOKEN_IDENTIFIER]    = {NULL,     NULL,   PREC_NONE},
-  [TOKEN_STRING]        = {NULL,     NULL,   PREC_NONE},
+  [TOKEN_STRING]        = {string,   NULL,   PREC_NONE},
   [TOKEN_NUMBER]        = {number,   NULL,   PREC_NONE},
   [TOKEN_AND]           = {NULL,     NULL,   PREC_NONE},
   [TOKEN_CLASS]         = {NULL,     NULL,   PREC_NONE},
@@ -272,22 +277,6 @@ bool compile(const char *source, Chunk *chunk) {
     advance();
     expression();
     consume(TOKEN_EOF, "Expect end of expression");
-
-    // int line = -1;
-    // while (true) {
-    //     Token token = scanToken();
-    //     if (token.line != line) {
-    //         printf("%4d ", token.line);
-    //         line = token.line;
-    //     }
-    //     else {
-    //         printf("   | ");
-    //     }
-    //
-    //     printf("%2d '%.*s'\n", token.type, token.length, token.start);
-    //
-    //     if (token.type == TOKEN_EOF) break;
-    // }
 
     endCompiler();
     return !parser.hadError; 

@@ -13,6 +13,7 @@ add_executable(clox
     src/Chunk/chunk.c
     src/Debug/debug.c
     src/Core/memory.c
+    src/Core/object.c
     src/Core/value.c
     src/VM/vm.c
 )
