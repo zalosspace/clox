@@ -35,10 +35,11 @@ static void runtimeError(const char *format, ...) {
 
 void initVM() {
     resetStack();
+    vm.objects = NULL;
 }
 
 void freeVM() {
-
+    freeObjects();
 }
 
 void push(Value value) {
@@ -89,7 +90,6 @@ static InterpretResult run() {
     } while (false)
 
     for(;;) {
-        uint8_t instruction = READ_BYTE();
 #ifdef DEBUG_TRACE_EXECUTION
         printf("        ");
         for(Value *slot = vm.stack; slot < vm.stackTop; slot++) {
@@ -108,6 +108,8 @@ static InterpretResult run() {
             vm.chunk,
             (int)(vm.ip - vm.chunk->code));
 #endif
+
+        uint8_t instruction = READ_BYTE();
         switch (instruction) {
             case OP_CONSTANT: {
                 Value constant = READ_CONSTANT();
