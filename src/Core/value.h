@@ -22,10 +22,10 @@ typedef struct {
 } Value;
 
 // Value initializer macro
-#define BOOL_VAL(value)   ((Value){VAL_BOOL, {.boolean = value}})
-#define NIL_VAL           ((Value){VAL_NIL, {.number = 0}})
-#define NUMBER_VAL(value) ((Value){VAL_NUMBER, {.number = value}})
-#define OBJ_VAL(object)   ((Value){VAL_OBJ, {.obj = (Obj*)object}})
+#define MAKE_BOOL_VAL(value)   ((Value){VAL_BOOL, {.boolean = value}})
+#define MAKE_NIL_VAL           ((Value){VAL_NIL, {.number = 0}})
+#define MAKE_NUMBER_VAL(value) ((Value){VAL_NUMBER, {.number = value}})
+#define MAKE_OBJ_VAL(object)   ((Value){VAL_OBJ, {.obj = (Obj*)object}})
 
 // Value accessor macro
 #define AS_BOOL(value)   ((value).as.boolean)

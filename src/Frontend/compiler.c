@@ -178,13 +178,14 @@ static void grouping() {
 
 static void number() {
     double value = strtod(parser.previous.start, NULL);
-    emitConstant(NUMBER_VAL(value));
+    emitConstant(MAKE_NUMBER_VAL(value));
 }
 
 static void string() {
-    emitConstant(OBJ_VAL(
-        copyString(parser.previous.start + 1,
-                   parser.previous.length - 2)));
+    emitConstant(MAKE_OBJ_VAL(
+            // String without quotes
+            copyString(parser.previous.start + 1,
+                       parser.previous.length - 2)));
 }
 
 static void unary() {

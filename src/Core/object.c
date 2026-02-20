@@ -24,10 +24,22 @@ static ObjString *allocateString(char *chars, int length) {
     return string;
 }
 
+ObjString *takeString(char *chars, int length) {
+    return allocateString(chars, length);
+}
+
 ObjString *copyString(const char *chars, int length) {
     char *heapChars = ALLOCATE(char, length + 1);
     memcpy(heapChars, chars, length);
     heapChars[length] = '\0'; // Terminate string
 
     return allocateString(heapChars, length);
+}
+
+void printObject(const Value value) {
+    switch (GET_OBJ_TYPE(value)) {
+        case OBJ_STRING:
+            printf("%s", AS_CSTRING(value));
+            break;
+    }
 }
